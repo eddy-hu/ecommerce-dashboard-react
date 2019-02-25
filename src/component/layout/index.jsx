@@ -1,0 +1,24 @@
+import React from 'react';
+
+import './theme.css';
+import NavTop from '../nav-top/index.jsx';
+import NavSide from '../nav-side/index.jsx';
+
+class Layout extends React.Component{
+
+    constructor(props){
+        super(props);
+    }
+
+    render(){
+        return(
+            <div id="wraper">
+                <NavTop />
+                <NavSide />
+                {this.props.children}
+            </div>
+        );
+    }
+}
+
+export default Layout;
