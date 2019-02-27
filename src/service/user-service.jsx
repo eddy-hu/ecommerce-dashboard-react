@@ -2,7 +2,7 @@ import Util from "../util";
 import $ from "jquery";
 const util = new Util();
 
-class User {
+class UserService {
   login(loginInfo) {
     return util.request({
       type: "post",
@@ -44,4 +44,4 @@ class User {
   }
 }
 
-export default User;
+export default UserService;

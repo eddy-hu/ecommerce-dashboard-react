@@ -16,6 +16,7 @@ body {
   background: #2b2e33;
 }
 
+
 #page-wrapper {
   padding: 15px 15px;
   min-height: 600px;
@@ -60,7 +61,6 @@ h4 {
 p {
   font-size: 16px;
   line-height: 25px;
-  padding-top: 20px;
 }
 .panel {
   border-radius: 0px;
@@ -554,5 +554,34 @@ ul.nav.nav-second-level.collapse.in {
     display: block;
     padding-top: 14px;
     font-size: 19px;
+  }
+}
+
+.color-box{
+  display: block;
+  height: 200px;
+  text-align: center;
+  padding: 20px 0;
+  opacity: .9;
+  transition: all .3s;
+  &:hover{
+    text-decoration: none;
+    color: #555;
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  &:focus{
+    text-decoration: none;
+  }
+  .count{
+    font-size: 50px;
+    height: 80px;
+    line-height: 80px;
+  }
+  .description{
+    font-size: 18px;
+    .fa{
+      margin-right: 5px;
+    }
   }
 }

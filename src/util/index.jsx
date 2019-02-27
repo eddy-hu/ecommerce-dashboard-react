@@ -10,10 +10,10 @@ class Util{
                 data : param.data || null,
                 success(res) {
                     // request success
-                    if(res.status == 0){
+                    if(res.status === 0){
                         typeof resolve === 'function' && resolve(res.data,res.msg);
 
-                    }else if(res.status == 10){ //didn't login
+                    }else if(res.status === 10){ //didn't login
                        this.doLogin();
                     }else{
                         typeof reject === 'function' && reject(res.masg || res.data);
