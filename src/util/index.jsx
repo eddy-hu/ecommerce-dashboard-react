@@ -1,6 +1,8 @@
 import $ from 'jquery';
 
 class Util{
+
+    
     request(param){
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -8,7 +10,7 @@ class Util{
                 url : param.url || '',
                 dataType : param.dataType || 'json',
                 data : param.data || null,
-                success(res) {
+                success : res => {
                     // request success
                     if(res.status === 0){
                         typeof resolve === 'function' && resolve(res.data,res.msg);
@@ -19,7 +21,7 @@ class Util{
                         typeof reject === 'function' && reject(res.masg || res.data);
                     }
                 },
-                error (err) {
+                error : err=> {
                     typeof reject === 'function' && reject(err.statusText);
                 }
             });
@@ -27,7 +29,9 @@ class Util{
       
     }
     //redirect to login page
+    //encodeURIComponent(window.location.pathname)
     doLogin(){
+        console.log('do login');
         window.location.href = './login?redirect='+ encodeURIComponent(window.location.pathname);
     }
     //get URL  params

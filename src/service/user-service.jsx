@@ -5,16 +5,16 @@ const util = new Util();
 class UserService {
   login(loginInfo) {
     return util.request({
-      type: "post",
-      url: "http://admintest.happymmall.com/manage/user/login.do",
+      type: 'post',
+      url: 'http://admintest.happymmall.com/manage/user/login.do',
       data: loginInfo
     });
   }
 
   logout(){
     return util.request({
-        type: "post",
-        url: "http://admintest.happymmall.com/user/logout.do",
+        type: 'post',
+        url: 'http://admintest.happymmall.com/user/logout.do',
       });
   }
 
@@ -42,6 +42,18 @@ class UserService {
         msg: 'username and password are valid',
     }
   }
+
+  getUserList(pageNum){
+    return util.request({
+      type : 'post',
+      url :  "http://admintest.happymmall.com/manage/user/list.do",
+      data : {
+        pageNum : pageNum,
+
+      }
+    })
+  }
+
 }
 
 export default UserService;
