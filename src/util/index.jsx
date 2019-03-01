@@ -1,7 +1,12 @@
 import $ from 'jquery';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
-class Util{
-
+class Util extends React.Component{
+    constructor(props) {
+        super(props);
+    }
     
     request(param){
         return new Promise((resolve, reject) => {
@@ -11,11 +16,14 @@ class Util{
                 dataType : param.dataType || 'json',
                 data : param.data || null,
                 success : res => {
+
+                    console.log(res);
                     // request success
                     if(res.status === 0){
                         typeof resolve === 'function' && resolve(res.data,res.msg);
 
                     }else if(res.status === 10){ //didn't login
+
                        this.doLogin();
                     }else{
                         typeof reject === 'function' && reject(res.masg || res.data);
@@ -28,11 +36,14 @@ class Util{
         });
       
     }
+
+
     //redirect to login page
     //encodeURIComponent(window.location.pathname)
     doLogin(){
         console.log('do login');
-        window.location.href = './login?redirect='+ encodeURIComponent(window.location.pathname);
+      
+       window.location.href = './login?redirect='+ encodeURIComponent(window.location.pathname);
     }
     //get URL  params
     getUrlParam(name){
@@ -45,7 +56,11 @@ class Util{
     }
     // error tips
     errorTips(errMsg){
-        alert(errMsg || 'Invalid username or password')
+        alert(errMsg || 'Invalid username or password');
+    }
+
+    successTips(successMsg){
+        alert(successMsg || 'Success');
     }
 
     setStorage(name, data){
