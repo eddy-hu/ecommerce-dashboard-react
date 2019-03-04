@@ -69,9 +69,9 @@ class ProductList extends React.Component {
   }
 
   onSetProductStatus(e, productId, currentStatus) {
-    let newStatus = currentStatus == 1 ? 2 : 1;
+    let newStatus = currentStatus === 1 ? 2 : 1;
     let confirmTips =
-      currentStatus == 1
+      currentStatus === 1
         ? "Are you sure you want to make this product unavailable?"
         : "Are you sure you want to make this product available?";
     if (window.confirm(confirmTips)) {
@@ -114,7 +114,15 @@ class ProductList extends React.Component {
 
     return (
       <div id="page-wrapper">
-        <Header title="Product List" />
+        <Header title="Product List" >
+        <div className="page-header-right">
+        
+          <Link to="/product-save" className="btn btn-primary">  
+          <i className="fa fa-plus"></i>
+          <span>Add</span>
+          </Link>
+        </div>
+        </Header>
         <ListSearch onSearch={(searchType, searchKeyword) => { this.onSearch(searchType, searchKeyword)} }/>
         <TableList tableHeads={tableHeads}>
           {this.state.list.map((product, index) => {

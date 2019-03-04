@@ -30,7 +30,20 @@ class ProductService {
       type : 'post',
       url :  "http://admintest.happymmall.com/manage/set_sale_status.do",
       data : productInfo,
-    })
+    });
+  }
+
+  //Category services
+
+  getCategoryList(parentCategoryId){
+    return util.request({
+      type : 'post',
+      url :  "http://admintest.happymmall.com/manage/category/get_category.do",
+      data : {
+        categoryId : parentCategoryId || 0,
+        
+      }
+    });
   }
 
 }
