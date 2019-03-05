@@ -3,6 +3,9 @@ import Header from "../../../component/header";
 import Util from "../../../util/index";
 import ProductService from "../../../service/product-service";
 import CategorySelector from './category-selector';
+import FileUploader from '../../../util/file-uploader/index';
+import './save.scss';
+
 
 const productService = new ProductService();
 const util = new Util();
@@ -13,17 +16,40 @@ class ProductSave extends Component {
         this.state={
             categoryId : 0,
             parentCategoryId : 0,
+            subImages: [],
+
         }
     }
     onCategoryChange(categoryId, parentCategoryId){
         //Get category ids;
     }
 
+    onUploadSuccess(res){
+      let subImages =  this.state.subImages;
+      subImages.push(res)
+      this.setState({
+        subImages: subImages,
+      })
+
+    }
+    onError(errMsg){
+      util.errorTips(errMsg);
+    }
+
+    onImageDelete(e){
+      let index = e.target.index;
+      let subImages = this.state.subImages;
+      subImages.splice(index,1);
+      this.setState({
+        subImages: subImages
+      })
+    }
+
   render() {
     return (
       <div id="page-wrapper">
         <Header title="Add Product" />
-        <form>
+        <div>
 
           <div className="form-group row">
             <label  className="col-md-2 col-form-label">
@@ -94,7 +120,22 @@ class ProductSave extends Component {
               Images 
             </label>
             <div className="col-md-10">
-              xxxx
+              {
+                this.state.subImages.length ? this.state.subImages.map(
+                  (image, index) => (
+                  <div className="img-con" key={index}>
+                  <img className="img" src={image.url}/>
+                  <i className="fa fa-close" index={index} onClick={(e)=> this.onImageDelete(e)}></i>
+                   </div>
+                  )
+                ) : (<div>Please upload image</div>)
+              }
+            </div>
+            <div className="col-md-offset-2 col-md-10">
+              <FileUploader 
+              onSuccess={(res)=>{this.onUploadSuccess(res)}}
+              onError={(errMsg)=>{this.onUploadError(errMsg)}}
+              />
             </div>
           </div>
 
@@ -115,7 +156,7 @@ class ProductSave extends Component {
               </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

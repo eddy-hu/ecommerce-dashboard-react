@@ -10,7 +10,7 @@ class CategorySelector extends Component {
 
     constructor(props){
         super(props);
-        this.stete={
+        this.state={
             firstCategoryList : [],
             firstCategoryId : 0,
             secondCategoryList : [],
@@ -65,6 +65,7 @@ class CategorySelector extends Component {
 
     //passing selected result to super component
     onPropsCategoryChange(){
+        //check function exist in props
         let categoryChangeable = typeof this.props.onCategoryChange === 'function';
         if(this.state.secondCategoryId){//if it has second category id
             categoryChangeable && this.props.onCategoryChange(this.state.secondCategoryId,this.state.firstCategoryId);
@@ -73,8 +74,13 @@ class CategorySelector extends Component {
         }
     }
 
+
+
     render() {
-  
+
+        let options = this.state.firstCategoryList === null ? null : this.state.firstCategoryList.map(
+            (category,index) => <option value={category.id} key={index}>{category.name}</option> );
+
       return (
         <div className="col-md-10">
         <select className="form-control category-select"
@@ -82,10 +88,8 @@ class CategorySelector extends Component {
         onChange= {(e) => this.onFirstCategoryChange(e)}
         >
            <option value="">Select category</option>
-           {
-               this.state.firstCategoryList.map(
-                   (category,index) => <option value={category.id} key={index}>{category.name}</option> )
-           }
+           {options}
+          
         </select>
         {  this.state.secondCategoryList.length ?  //if the length equals 0, return null;
         (<select name=""   className="form-control category-select"

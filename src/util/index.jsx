@@ -43,7 +43,7 @@ class Util extends React.Component{
     doLogin(){
         console.log('do login');
       
-       window.location.href = './login?redirect='+ encodeURIComponent(window.location.pathname);
+      // window.location.href = './login?redirect='+ encodeURIComponent(window.location.pathname);
     }
     //get URL  params
     getUrlParam(name){
