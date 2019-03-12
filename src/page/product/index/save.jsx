@@ -14,6 +14,7 @@ class ProductSave extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.match.params.pid,
       title:'',
       description:'',
       price:'',
@@ -25,8 +26,34 @@ class ProductSave extends Component {
       subImages: [],
     };
   }
+
+  componentDidMount(){
+    this.loadProduct();
+  }
+  //loading product detail
+  loadProduct(){
+    if(this.state.id){// if state has id means that edit button has been clicked
+      productService.getProduct(this.state.id).then((res)=> {
+        let images = res.subImages.split(',');
+        res.subImages = images.map((imgUri) => {
+          return{
+            uri: imgUri,
+            url: res.imageHost+imgUri,
+          }
+        });
+        res.defaultDetail = res.detail;
+        this.setState(res);
+      }, (errMsg)=> {
+        util.errorTips(errMsg);
+      })
+    }
+  }
+
   onCategoryChange(categoryId, parentCategoryId) {
-    //Get category ids;
+    this.setState({
+      categoryId: categoryId,
+      parentCategoryId: parentCategoryId,
+    })
   }
   onValueChange(e){
     let name=e.target.name,
@@ -52,13 +79,30 @@ class ProductSave extends Component {
     let product ={
       title: this.state.title,
       description: this.state.description,
-      price: this.state.price,
-      quantity: this.state.quantity,
+      price: parseFloat(this.state.price),
+      quantity: parseInt(this.state.quantity),
       detail: this.state.detail,
       status: this.state.status,
-      categoryId: this.state.categoryId,
+      categoryId: parseInt(this.state.categoryId),
       parentCategoryId: this.state.parentCategoryId,
-      subImages: this.state.subImages,
+      subImages: this.getSubImagesString(),
+    }
+    //console.log(product);
+    let productCheckResult= productService.checkProduct(product);
+
+    if(this.state.id){
+      product.id= this.state.id;
+    }
+
+    if(productCheckResult.status){
+      productService.saveProduct().then((res) => {
+        util.successTips(res);
+        this.props.history.push('/product');
+      },(errMsg) => {
+        util.errorTips(errMsg);
+      })
+    }else{
+      util.errorTips(productCheckResult.msg);
     }
   }
 
@@ -102,6 +146,7 @@ class ProductSave extends Component {
                 className="form-control"
                 placeholder="Enter the product title"
                 name="title"
+                value={this.state.title}
                 onChange={(e) =>this.onValueChange(e)}
               />
             </div>
@@ -115,6 +160,7 @@ class ProductSave extends Component {
                 className="form-control"
                 placeholder="Enter the product description"
                 name="description"
+                value={this.state.description}
                 onChange={(e) =>this.onValueChange(e)}
               />
             </div>
@@ -123,6 +169,8 @@ class ProductSave extends Component {
           <div className="form-group row">
             <label className="col-md-2 col-form-label">Category</label>
             <CategorySelector
+              categoryId={this.state.categoryId}
+              parentCategoryId={this.state.parentCategoryId}
               onCategoryChange={(categoryId, parentCategoryId) =>
                 this.onCategoryChange(categoryId, parentCategoryId)
               }
@@ -139,6 +187,7 @@ class ProductSave extends Component {
                   className="form-control"
                   placeholder="0"
                   name="price"
+                  value={this.state.price}
                   onChange={(e) =>this.onValueChange(e)}
                 />
               </div>
@@ -153,6 +202,7 @@ class ProductSave extends Component {
                 className="form-control"
                 placeholder="0"
                 name="quantity"
+                value={this.state.quantity}
                 onChange={(e) =>this.onValueChange(e)}
               />
             </div>
@@ -192,6 +242,8 @@ class ProductSave extends Component {
             <label className="col-md-2 col-form-label">Detail</label>
             <div className="col-md-10">
               <MyEditor 
+              detail={this.state.detail}
+              defaultDetail={this.state.defaultDetail}
                onChange={(value) =>this.onDetailValueChange(value)}
               />
             </div>
@@ -199,7 +251,7 @@ class ProductSave extends Component {
 
           <div className="form-group row">
             <div className="col-md-10">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" onClick={(e)=>this.onSubmit(e)} className="btn btn-primary">
                 Save
               </button>
             </div>

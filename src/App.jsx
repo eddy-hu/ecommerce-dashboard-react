@@ -5,6 +5,7 @@ import Error from './page/error';
 import UserList from './page/user';
 import ProductList from './page/product/index/index';
 import ProductSave from './page/product/index/save';
+import ProductDetail from './page/product/index/detail';
 import { HashRouter } from 'react-router-dom';
 
 
@@ -32,7 +33,8 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/product" component={ProductList} />
             <Route exact path="/product-category" component={Home} />
-            <Route exact path="/product-save" component={ProductSave} />
+            <Route exact path="/product-save/:pid" component={ProductSave} />
+            <Route exact path="/product-detail/:pid" component={ProductDetail} />
             <Route exact path="/user-index" component={UserList} />
             <Redirect exact from="/user" to="/user-index" />
             <Route component={Error} />
