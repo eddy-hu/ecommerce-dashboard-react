@@ -7,9 +7,6 @@ import ProductList from './page/product/index/index';
 import ProductSave from './page/product/index/save';
 import ProductDetail from './page/product/index/detail';
 import { HashRouter } from 'react-router-dom';
-
-
-
 import {
   BrowserRouter as Router,
   Redirect,
@@ -20,6 +17,7 @@ import {
 
 import Home from "./page/home";
 import Layout from "./component/layout";
+import CategoryList from './page/product/category';
 
 class App extends Component {
 
@@ -32,7 +30,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/product" component={ProductList} />
-            <Route exact path="/product-category" component={Home} />
+            <Route exact path="/product-category/index/:categoryId?" component={CategoryList} />
+            <Redirect exact from="/product-category" to="/product-category/index/:categoryId?" />
             <Route exact path="/product-save/:pid" component={ProductSave} />
             <Route exact path="/product-detail/:pid" component={ProductDetail} />
             <Route exact path="/user-index" component={UserList} />
