@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 import Login from './page/login';
 import Error from './page/error';
 import UserList from './page/user';
+import OrderList from './page/order';
+import OrderDetail from './page/order/detail';
 import ProductList from './page/product/index/index';
 import ProductSave from './page/product/index/save';
 import ProductDetail from './page/product/index/detail';
@@ -34,6 +36,9 @@ class App extends Component {
             <Redirect exact from="/product-category" to="/product-category/index/:categoryId?" />
             <Route exact path="/product-save/:pid" component={ProductSave} />
             <Route exact path="/product-detail/:pid" component={ProductDetail} />
+            <Route exact path="/order-index" component={OrderList} />
+            <Route exact path="/order-detail/:orderNumber" component={OrderDetail} />
+            <Redirect exact from="/order" to="/order-index" />
             <Route exact path="/user-index" component={UserList} />
             <Redirect exact from="/user" to="/user-index" />
             <Route component={Error} />

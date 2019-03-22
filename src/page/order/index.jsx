@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "../../../component/header";
+import Header from "../../component/header";
 import { Link } from "react-router-dom";
-import Pagination from "../../../util/pagination";
-import Util from "../../../util/index";
-import OrderService from "../../../service/order-service";
-import TableList from "../../../util/table-list/index";
+import Pagination from "../../util/pagination";
+import Util from "../../util/index";
+import OrderService from "../../service/order-service";
+import TableList from "../../util/table-list/index";
 import ListSearch from './index-list-search';
 
 const orderService = new OrderService();
@@ -59,7 +59,7 @@ class OrderList extends React.Component {
     this.setState({
       listType : listType,
       pageNum : 1,
-      orderNo : orderNumber,
+      orderNumber : orderNumber,
     }, ()=> {
       this.loadOrderList();
     });
@@ -90,7 +90,7 @@ class OrderList extends React.Component {
             return (
               <tr key={index}>
                 <td>
-                <Link className="opear" to={`/order/detail/${order.orderNumber}`}>        
+                <Link className="opear" to={`/order/detail/${order.orderNo}`}>        
                 {order.orderNo}
                 </Link>
                 </td>
@@ -99,7 +99,7 @@ class OrderList extends React.Component {
                 <td>${order.payment}</td>
                 <td>{order.createTime}</td>
                 <td>
-                  <Link className="opear" to={`/order/detail/${order.orderNumber}`}>
+                  <Link className="opear" to={`/order/detail/${order.orderNo}`}>
                     Detail
                   </Link>
                 </td>

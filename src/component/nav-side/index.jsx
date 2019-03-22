@@ -48,7 +48,7 @@ class NavSide extends React.Component{
                          </Link>
                         <ul className="nav nav-second-level collapse-in dashboard-menu">
                             <li>
-                                <NavLink  className="dashboard-menu" activeClassName="active-menu dashboard-menu" to="/order"> &nbsp; &nbsp;  Orders</NavLink>
+                                <NavLink  className="dashboard-menu" activeClassName="active-menu dashboard-menu" to="/order-index"> &nbsp; &nbsp;  Orders</NavLink>
                             </li>
                             
                         </ul>

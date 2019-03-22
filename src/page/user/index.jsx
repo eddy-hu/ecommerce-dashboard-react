@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../component/header";
+import Header from "../../component/header/";
 import { Link } from "react-router-dom";
 import Pagination from "../../util/pagination";
 import Util from "../../util";
